@@ -43,6 +43,7 @@ sheety_password = os.environ.get("SHEETY_PASSWORD")
 
 date = dt.datetime.today().strftime("%d/%m/%Y")
 time = dt.datetime.now().strftime("%X")
+# ---------------------------- Updating google sheets ------------------------------- #
 
 for exercise in exercise_data["exercises"]:
     new_row_data = {
@@ -50,9 +51,11 @@ for exercise in exercise_data["exercises"]:
             "date": date,
             "time": time,
             "exercise": exercise["name"].title(),
-            "duration": exercise["duration_min"],
+            "duration": str(exercise["duration_min"]),
             "calories": exercise["nf_calories"]
         }
     }
+
+    print(exercise["duration_min"])
     add_row_response = requests.post(url=sheety_endpoint, json=new_row_data, auth=(sheety_user_name, sheety_password))
     add_row_response.raise_for_status()
