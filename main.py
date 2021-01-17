@@ -5,6 +5,7 @@ import datetime as dt
 app_id = os.environ.get("APP_ID")
 api_key = os.environ.get("API_KEY")
 
+# User data
 AGE = "24"
 WEIGHT = 75
 HEIGHT = 175
@@ -41,10 +42,12 @@ sheety_endpoint = os.environ.get("SHEETY_ENDPOINT")
 sheety_user_name = os.environ.get("SHEETY_USERNAME")
 sheety_password = os.environ.get("SHEETY_PASSWORD")
 
+# Today's date and current time
 date = dt.datetime.today().strftime("%d/%m/%Y")
 time = dt.datetime.now().strftime("%X")
 # ---------------------------- Updating google sheets ------------------------------- #
 
+# updating one row for each exercise
 for exercise in exercise_data["exercises"]:
     new_row_data = {
         "workout": {
@@ -56,6 +59,6 @@ for exercise in exercise_data["exercises"]:
         }
     }
 
-    print(exercise["duration_min"])
+    # Sheety api for updating row
     add_row_response = requests.post(url=sheety_endpoint, json=new_row_data, auth=(sheety_user_name, sheety_password))
     add_row_response.raise_for_status()
